@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>博物馆文物识别系统</title>
+    <link rel="stylesheet" href="/static/css/normalize.css" />
+    <link rel="stylesheet" href="/static/css/elzero.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/static/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <style type="text/css">
+        .file {
+                position: relative;
+                display: inline-block;
+                background: #D0EEFF;
+                border: 1px solid #99D3F5;
+                border-radius: 4px;
+                padding: 4px 12px;
+                overflow: hidden;
+                color: #1E88C7;
+                text-decoration: none;
+                text-indent: 0;
+                line-height: 20px;
+            }
+        .file input {
+                position: absolute;
+                font-size: 100px;
+                right: 0;
+                top: 0;
+                opacity: 0;
+            }
+        .file:hover {
+                background: #AADFFD;
+                border-color: #78C3F3;
+                color: #004974;
+                text-decoration: none;
+            }
+
+        .articles .box .content p{
+            max-height: 100px;
+            overflow: hidden;
+            display: -webkit-box;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .articles .box img
+        {
+            height:318px;
+        }
+
+    </style>
+  </head>
+  <body>
+    <!-- Start Header -->
+    <div class="header" id="header">
+      <div class="container">
+        <a href="#" class="logo">博物馆文物识别系统</a>
+        <ul class="main-nav">
+            <li>
+                <a href="#ys">文物展览</a>
+                <div class="mega-menu">
+              <ul class="links">
+                <li>
+                  <a href="#ys"><i class="far fa-comments fa-fw"></i> 玉石 </a>
+                </li>
+                <li>
+                  <a href="#hh"><i class="far fa-user fa-fw"></i> 绘画 </a>
+                </li>
+                <li>
+                  <a href="#tc"><i class="far fa-building fa-fw"></i> 陶瓷 </a>
+                </li>
+                <li>
+                  <a href="#ds"><i class="far fa-check-circle fa-fw"></i> 雕塑 </a>
+                </li>
+                <li>
+                  <a href="#qtq"><i class="far fa-clipboard fa-fw"></i> 青铜器 </a>
+                </li>
+              </ul>
+            </div>
+            </li>
+            <li><a href="#detect">文物识别系统</a></li>
+            <li><a href="#comment">网友评论</a></li>
+            <li><a href="/login">切换用户</a></li>
+            {%  if cur_user|length > 0 %}
+            <li><a href="#">{{ cur_user[0] }}</a></li>
+            {% endif %}
+
+        </ul>
+      </div>
+    </div>
+    <!-- End Header -->
+    <!-- Start Landing -->
+    <div class="landing">
+      <div class="container">
+        <div class="text">
+          <h1>欢迎使用,博物馆文物识别系统</h1>
+          <p>可识别玉石、绘画、陶器、雕塑、青铜器...</p>
+        </div>
+        <div class="image">
+          <img src="/static/imgs/main.png" alt="" />
+        </div>
+      </div>
+      <a href="#articles" class="go-down">
+        <i class="fas fa-angle-double-down fa-2x"></i>
+      </a>
+    </div>
+    <!-- End Landing -->
+    <!-- Start Articles -->
+    {% if items['玉石'] | length > 0 %}
+    <div class="articles" id="ys">
+      <h2 class="main-title">玉石</h2>
+      <div class="container">
+        {% for item in items['玉石'] %}
+        <div class="box">
+          <img src="{{ item[3] }}" alt="" />
+          <div class="content">
+            <h3>{{ item[1] }}</h3>
+            <p>{{ item[2] }}</p>
+          </div>
+          <div class="info">
+            <a href="/item?id={{ item[0] }}">Read More</a>
+            <i class="fas fa-long-arrow-alt-right"></i>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+    {% if items['绘画'] | length > 0 %}
+    <div class="articles" id="hh">
+      <h2 class="main-title">绘画</h2>
+      <div class="container">
+        {% for item in items['绘画'] %}
+        <div class="box">
+          <img src="{{ item[3] }}" alt="" />
+          <div class="content">
+            <h3>{{ item[1] }}</h3>
+            <p>{{ item[2] }}</p>
+          </div>
+          <div class="info">
+            <a href="/item?id={{ item[0] }}">Read More</a>
+            <i class="fas fa-long-arrow-alt-right"></i>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+    {% if items['陶瓷'] | length > 0 %}
+    <div class="articles" id="tc">
+      <h2 class="main-title">陶瓷</h2>
+      <div class="container">
+        {% for item in items['陶瓷'] %}
+        <div class="box">
+          <img src="{{ item[3] }}" alt="" />
+          <div class="content">
+            <h3>{{ item[1] }}</h3>
+            <p>{{ item[2] }}</p>
+          </div>
+          <div class="info">
+            <a href="/item?id={{ item[0] }}">Read More</a>
+            <i class="fas fa-long-arrow-alt-right"></i>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+    {% if items['雕塑'] | length > 0 %}
+    <div class="articles" id="ds">
+      <h2 class="main-title">雕塑</h2>
+      <div class="container">
+        {% for item in items['雕塑'] %}
+        <div class="box">
+          <img src="{{ item[3] }}" alt="" />
+          <div class="content">
+            <h3>{{ item[1] }}</h3>
+            <p>{{ item[2] }}</p>
+          </div>
+          <div class="info">
+            <a href="/item?id={{ item[0] }}">Read More</a>
+            <i class="fas fa-long-arrow-alt-right"></i>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+    {% if items['青铜器'] | length > 0 %}
+    <div class="articles" id="qtq">
+      <h2 class="main-title">青铜器</h2>
+      <div class="container">
+        {% for item in items['青铜器'] %}
+        <div class="box">
+          <img src="{{ item[3] }}" alt="" />
+          <div class="content">
+            <h3>{{ item[1] }}</h3>
+            <p>{{ item[2] }}</p>
+          </div>
+          <div class="info">
+            <a href="/item?id={{ item[0] }}">Read More</a>
+            <i class="fas fa-long-arrow-alt-right"></i>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+    <div class="spikes"></div>
+    <!-- End Articles -->
+    <!-- Start Gallery -->
+    <div class="gallery" id="detect">
+      <h2 class="main-title">文物识别系统</h2>
+      <div class="container" style="grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));">
+        <div class="box">
+          <div class="image">
+            <img id="detect_img" src="/static/imgs/gallery-01.png" alt="" />
+          </div>
+        </div>
+        <form id=upload">
+            <ul>
+                <li style="margin-top:100px">
+                    <input type="file" id="file" class="file" style="display: inline-block">
+                    <button class="file" id="submit" value="开始识别" style="display: inline-block">开始识别</button>
+                </li>
+                <li><h1>识别结果:</h1><h1 class="main-title" id="result"></h1></li>
+            </ul>
+        </form>
+          <script>
+              $(function() {
+                $('#submit').click(function(event) {
+                    event.preventDefault();
+                  var file = $('#file')[0].files[0];
+                  var formData = new FormData();
+                  formData.append('file', file);
+                  $.ajax({
+                    type: 'POST',
+                    url: '/detect',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    async:true,
+                    success: function(response) {
+                        $('#detect_img').attr('src',response.url)
+                        $('#result').text(response.result);
+                    }
+                  });
+                });
+              });
+          </script>
+      </div>
+    </div>
+    <!-- End Gallery -->
+
+    <!-- Start Testimonials -->
+    <div class="testimonials" id="comment">
+      <h2 class="main-title">网友评论</h2>
+      <div class="container">
+      {% for i in comments %}
+        <div class="box">
+            <form method="post" action="/delete_comment">
+                <button type="submit"><img style="cursor:pointer" src="/static/imgs/delete.png" alt=""/></button>
+                <input type="hidden" value={{ i[4] }} name="id">
+            </form>
+          <h3>{{ i[0] }}</h3>
+            {% if i[1] == 1 %}
+            <span class="title">管理员</span>
+            {% else %}
+            <span class="title">普通用户</span>
+            {% endif %}
+          <div class="rate">
+          {% for s in range(i[3]) %}
+            <i class="filled fas fa-star"></i>
+          {% endfor %}
+          {% for s in range(5-i[3]) %}
+            <i class="far fa-star"></i>
+          {% endfor %}
+          </div>
+          <p>
+              {{ i[2] }}
+          </p>
+        </div>
+      {% endfor %}
+      </div>
+    </div>
+
+    <div class="spikes"></div>
+
+    <!-- Start Events -->
+    <div class="events" id="events">
+      <div class="dots dots-up"></div>
+      <div class="dots dots-down"></div>
+      <h2 class="main-title" style="margin-bottom: 30px">评论</h2>
+      <div class="container">
+
+        <div class="subscribe">
+          <form action="/comment" method="post" style="flex-direction: column;align-items: stretch">
+            <input class="input" name="star" max="5" min="0" type="number" style="width: 100%;padding:40px" placeholder="评价:0~5" />
+            <br>
+            <textarea class="input" name="content" style="width: 100%;height:300px;border-radius: 50px;padding:40px;border:none;" placeholder="您的评论"></textarea><br>
+            <input type="submit" value="发表" />
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Start Footer -->
+    <div class="footer">
+      <div class="container">
+        <div class="box">
+          <h3>文物识别系统</h3>
+          <ul class="social">
+            <li>
+              <a href="#" class="facebook">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="twitter">
+                <i class="fab fa-twitter"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="youtube">
+                <i class="fab fa-youtube"></i>
+              </a>
+            </li>
+          </ul>
+          <p class="text">
+            深度学习算法识别
+          </p>
+        </div>
+        <div class="box">
+          <ul class="links">
+            <li><a href="#">Important Link 1</a></li>
+            <li><a href="#">Important Link 2</a></li>
+            <li><a href="#">Important Link 3</a></li>
+            <li><a href="#">Important Link 4</a></li>
+            <li><a href="#">Important Link 5</a></li>
+          </ul>
+        </div>
+        <div class="box">
+          <div class="line">
+            <i class="fas fa-map-marker-alt fa-fw"></i>
+            <div class="info">China</div>
+          </div>
+          <div class="line">
+            <i class="far fa-clock fa-fw"></i>
+            <div class="info">00:00 ~ 24:00</div>
+          </div>
+          <div class="line">
+            <i class="fas fa-phone-volume fa-fw"></i>
+            <div class="info">
+              <span>+6666666666</span>
+              <span>+6666666666</span>
+            </div>
+          </div>
+        </div>
+        <div class="box footer-gallery">
+          <img src="/static/imgs/gallery-01.png" alt="" />
+          <img src="/static/imgs/gallery-02.png" alt="" />
+          <img src="/static/imgs/gallery-03.jpg" alt="" />
+          <img src="/static/imgs/gallery-04.png" alt="" />
+          <img src="/static/imgs/gallery-05.jpg" alt="" />
+          <img src="/static/imgs/gallery-06.png" alt="" />
+        </div>
+      </div>
+      <p class="copyright">文物识别系统</p>
+    </div>
+    <!-- End Footer -->
+    <script src="/static/js/main.js"></script>
+
+  </body>
+</html>

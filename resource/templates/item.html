@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文物详情</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elzero</title>
+    <link rel="stylesheet" href="/static/css/normalize.css" />
+    <link rel="stylesheet" href="/static/css/elzero.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/static/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+<div class="header" id="header">
+      <div class="container">
+        <a href="/" class="logo">博物馆文物识别系统</a>
+        <ul class="main-nav">
+            <li>
+                <a href="/">文物展览</a>
+                <div class="mega-menu">
+              <ul class="links">
+                <li>
+                  <a href="/#ys"><i class="far fa-comments fa-fw"></i> 玉石 </a>
+                </li>
+                <li>
+                  <a href="/#hh"><i class="far fa-user fa-fw"></i> 绘画 </a>
+                </li>
+                <li>
+                  <a href="/#tc"><i class="far fa-building fa-fw"></i> 陶瓷 </a>
+                </li>
+                <li>
+                  <a href="/#ds"><i class="far fa-check-circle fa-fw"></i> 雕塑 </a>
+                </li>
+                <li>
+                  <a href="/#qtq"><i class="far fa-clipboard fa-fw"></i> 青铜器 </a>
+                </li>
+              </ul>
+            </div>
+            </li>
+            <li><a href="/#detect">文物识别系统</a></li>
+            <li><a href="/#comment">网友评论</a></li>
+            <li><a href="/login">登录</a></li>
+        </ul>
+      </div>
+    </div>
+<div class="work-steps" style="height: 100%" id="work-steps">
+      <h2 class="main-title">{{ item[1] }}</h2>
+      <div class="container">
+        <img src="{{ item[3] }}" alt="" class="image" style="width: 40%" />
+        <div class="info">
+          <div class="box">
+            <img src="../static/imgs/work-steps-1.png" alt="" />
+            <div class="text">
+              <h3>{{ item[1] }}</h3>
+              <p>
+                  {{ item[2] }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

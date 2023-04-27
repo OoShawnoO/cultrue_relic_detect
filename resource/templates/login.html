@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elzero</title>
+    <link rel="stylesheet" href="/static/css/normalize.css" />
+    <link rel="stylesheet" href="/static/css/elzero.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/static/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+<!-- Start Discount -->
+    <div class="discount" id="discount">
+      <div class="image">
+        <div class="content">
+          <h2>博物馆文物识别系统</h2>
+          <p>
+            中华文化历史悠久，从新石器良渚文化时期算起，距今已有五千多年，而文物则是这一厚重历史和优秀文化的载体，凝结着中华文明不同阶段的重要历史信息，具有极大的研究价值。改革开放促进了城镇化建设，也使得一大批文物重见天日，但是，专业的文物工作者毕竟是少数，很多文物的发现者并不能正确保护刚出土的文物，甚至不知道是不是文物，一些损坏和遗失文物的案例时有发生。因此，可以借助本系统，当有新的未知内容的图片输入时，可以及时识别文物图像内容。
+          </p>
+          <img src="/static/imgs/discount.png" alt="" />
+        </div>
+      </div>
+      <div class="form">
+        <div class="content">
+          <h2>欢迎使用</h2>
+          <form method="POST" action="/login">
+              {% for message in get_flashed_messages() %}
+              <div style="color:red">{{ message }}</div>
+              {% endfor %}
+            <input class="input" type="tt" placeholder="用户名" name="username" />
+            <input class="input" type="password" placeholder="密码" name="password" />
+            <input type="submit" value="登录" />
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- End Discount -->
+</body>
+</html>
