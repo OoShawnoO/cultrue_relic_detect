@@ -24,11 +24,15 @@ void close_sqlite(sqlite3* sql)
     sql = nullptr;
 }
 
-bool select_items(sqlite3* sql,jinja2::ValuesList& value_list)
+bool select_items(sqlite3* sql,jinja2::ValuesList& value_list,int id = -1)
 {
-    const char* sql_str = "select * from item";
+    std::string sql_str;
+    if(id < 0 )
+        sql_str = "select * from item";
+    else
+        sql_str = "select * from item where id =" + std::to_string(id);
     sqlite3_stmt* stmt = nullptr;
-    int result = sqlite3_prepare_v2(sql,sql_str,-1,&stmt,nullptr);
+    int result = sqlite3_prepare_v2(sql,sql_str.c_str(),-1,&stmt,nullptr);
     if(result == SQLITE_OK)
     {
         while(sqlite3_step(stmt) == SQLITE_ROW)
@@ -53,7 +57,33 @@ bool select_items(sqlite3* sql,jinja2::ValuesList& value_list)
     return true;
 }
 
-
+bool select_comments(sqlite3* sql,jinja2::ValuesList& value_list)
+{
+    std::string sql_str = "select user.username,user.admin,comment.content,comment.star,comment.id from user,comment where comment.uid = user.id";
+    sqlite3_stmt* stmt = nullptr;
+    int result = sqlite3_prepare_v2(sql,sql_str.c_str(),-1,&stmt,nullptr);
+    if(result == SQLITE_OK)
+    {
+        while(sqlite3_step(stmt) == SQLITE_ROW)
+        {
+            jinja2::ValuesList values{
+                    {(const char*)sqlite3_column_text(stmt,0)},
+                    {sqlite3_column_int(stmt,1)},
+                    {(const char*)sqlite3_column_text(stmt,1)},
+                    {sqlite3_column_int(stmt,2)},
+                    {sqlite3_column_int(stmt,3)},
+            };
+            value_list.emplace_back(values);
+        }
+    }
+    else
+    {
+        return false;
+    }
+    sqlite3_finalize(stmt);
+    stmt = nullptr;
+    return true;
+}
 
 class index_router : public router
 {
@@ -64,20 +94,35 @@ public:
     }
     bool method_get(http_conn* con) override
     {
-        std::ifstream in("resource/templates/item.html");
+        std::ifstream in("resource/templates/index.html");
         std::stringstream buffer;
         buffer << in.rdbuf();
         in.close();
 
-        jinja2::ValuesList values;
+        jinja2::ValuesList comments_values;
         sqlite3* sql = connect_sqlite();
-        select_items(sql,values);
+        select_comments(sql,comments_values);
+        jinja2::ValuesList items_values;
+        select_items(sql,items_values);
         sqlite3_close(sql);
 
+        jinja2::ValuesMap items_map{
+                {"玉石",jinja2::ValuesList()},
+                {"绘画",jinja2::ValuesList()},
+                {"陶瓷",jinja2::ValuesList()},
+                {"青铜器",jinja2::ValuesList()},
+                {"雕塑",jinja2::ValuesList()},
+        };
+        for(const auto& v : items_values)
+        {
+            items_map.at(v.asList()[4].asString()).asList().emplace_back(v);
+        }
         jinja2::Template temp;
         temp.Load(buffer.str());
         jinja2::ValuesMap params{
-                {"item",values[2]}
+                {"comments",comments_values},
+                {"items",items_map},
+                {"cur_user","custom"}
         };
 
         return con->send_str(temp.RenderAsString(params).value());
