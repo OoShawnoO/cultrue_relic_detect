@@ -1,5 +1,6 @@
 #include <jinja2cpp/template.h>
 #include <sqlite3.h>
+#include "conv_event/detect/detector.h"
 #include "conv_event/http/http_conn.h"
 
 const char* database_path = "db/app.db";
@@ -69,9 +70,9 @@ bool select_comments(sqlite3* sql,jinja2::ValuesList& value_list)
             jinja2::ValuesList values{
                     {(const char*)sqlite3_column_text(stmt,0)},
                     {sqlite3_column_int(stmt,1)},
-                    {(const char*)sqlite3_column_text(stmt,1)},
-                    {sqlite3_column_int(stmt,2)},
+                    {(const char*)sqlite3_column_text(stmt,2)},
                     {sqlite3_column_int(stmt,3)},
+                    {sqlite3_column_int(stmt,4)},
             };
             value_list.emplace_back(values);
         }
@@ -104,7 +105,7 @@ public:
         select_comments(sql,comments_values);
         jinja2::ValuesList items_values;
         select_items(sql,items_values);
-        sqlite3_close(sql);
+        close_sqlite(sql);
 
         jinja2::ValuesMap items_map{
                 {"玉石",jinja2::ValuesList()},
@@ -122,13 +123,30 @@ public:
         jinja2::ValuesMap params{
                 {"comments",comments_values},
                 {"items",items_map},
-                {"cur_user","custom"}
+                {"cur_user",jinja2::ValuesList {"custom"}}
         };
 
         return con->send_str(temp.RenderAsString(params).value());
     }
 };
 ROUTER(index_router)
+
+class detect_router : public router
+{
+public:
+    detect_router() : router("/detect",{POST})
+    {
+
+    }
+    bool method_post(http_conn* con) override
+    {
+        std::string data;
+
+        con->recv_all(data);
+        std::cout << data << std::endl;
+    }
+};
+ROUTER(detect_router)
 
 int main()
 {
