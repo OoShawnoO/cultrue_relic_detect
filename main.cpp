@@ -133,6 +133,7 @@ ROUTER(index_router)
 
 class detect_router : public router
 {
+    static detector _detector;
 public:
     detect_router() : router("/detect",{POST})
     {
@@ -140,12 +141,11 @@ public:
     }
     bool method_post(http_conn* con) override
     {
-        std::string data;
-
-        con->recv_all(data);
-        std::cout << data << std::endl;
+        auto ret = _detector.predict("tmp/img.jpg");
+        std::cout << ret.first << " " << ret.second << std::endl;
     }
 };
+detector detect_router::_detector("../model/culture_relic");
 ROUTER(detect_router)
 
 int main()

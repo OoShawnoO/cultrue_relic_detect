@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.25)
 project(culture_relic_detect CXX)
 
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/../libs/jinja2cpp/lib/jinja2cpp)
+set(jinja2cpp_DIR ~/CLionProjects/libs/jinja2cpp/lib/jinja2cpp)
 set(Torch_DIR ~/CLionProjects/libs/torch/)
 set(Torch_DIR ~/CLionProjects/libs/libtorch/share/cmake/Torch)
 set(OpenCV_DIR ~/CLionProjects/libs/opencv/lib/cmake/opencv4)
