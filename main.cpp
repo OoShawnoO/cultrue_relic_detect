@@ -141,12 +141,31 @@ public:
     }
     bool method_post(http_conn* con) override
     {
-        auto ret = _detector.predict("tmp/img.jpg");
-        std::cout << ret.first << " " << ret.second << std::endl;
+        auto ret = _detector.predict("resource/static/tmp/img.jpg");
+        json _predict{
+                {"url","static/tmp/img.jpg"},
+                {"result",ret.first},
+        };
+        return con->send_str(_predict.dump(),"application/json");
     }
 };
 detector detect_router::_detector("../model/culture_relic");
 ROUTER(detect_router)
+
+class tmp_jpg_filter : public filter {
+public:
+    tmp_jpg_filter() : filter("/static/tmp/*",{GET})
+    {
+
+    }
+    bool allow(http_conn* con) override
+    {
+        con->res_header.response_headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+        con->res_header.response_headers["Expires"] = "0";
+        return true;
+    }
+};
+FILTER(tmp_jpg_filter)
 
 int main()
 {
