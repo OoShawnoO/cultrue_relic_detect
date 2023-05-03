@@ -9,7 +9,7 @@ set(OpenCV_DIR ~/CLionProjects/libs/opencv/lib/cmake/opencv4)
 find_package(Torch REQUIRED)
 find_package(OpenCV REQUIRED)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS} ${OPENCV_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS} ${OPENCV_CXX_FLAGS} -DNO_ERROR_LOG")
 
 include_directories(${TORCH_INCLUDE_DIRS})
 include_directories(${OPENCV_INCLUDE_DIRS})

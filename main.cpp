@@ -155,6 +155,23 @@ public:
 detector detect_router::_detector("../model/culture_relic");
 ROUTER(detect_router)
 
+class login_router : public router{
+public:
+    login_router() : router("/login",{GET,POST})
+    {
+
+    }
+    bool method_get(http_conn* con) override
+    {
+        return con->render("/templates/login.html");
+    }
+    bool method_post(http_conn* con) override
+    {
+        return con->redirect("/index");
+    }
+};
+ROUTER(login_router);
+
 class tmp_jpg_filter : public filter {
 public:
     tmp_jpg_filter() : filter("/static/tmp/*",{GET})
@@ -169,6 +186,14 @@ public:
     }
 };
 FILTER(tmp_jpg_filter)
+
+class templates_filter : public filter{
+public:
+    templates_filter() : filter("/templates/*",{GET,POST})
+    {
+    }
+};
+FILTER(templates_filter)
 
 int main()
 {
