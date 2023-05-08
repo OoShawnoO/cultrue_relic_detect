@@ -38,15 +38,27 @@ bool select_items(sqlite3* sql,jinja2::ValuesList& value_list,int id = -1)
     {
         while(sqlite3_step(stmt) == SQLITE_ROW)
         {
-            jinja2::ValuesList values{
-                    {sqlite3_column_int(stmt,0)},
-                    {(const char*)sqlite3_column_text(stmt,1)},
-                    {(const char*)sqlite3_column_text(stmt,2)},
-                    {(const char*)sqlite3_column_text(stmt,3)},
-                    {(const char*)sqlite3_column_text(stmt,4)},
-
-            };
-            value_list.emplace_back(values);
+            jinja2::ValuesList values;
+//            {
+//                    {sqlite3_column_int(stmt,0)},
+//                    {(const char*)sqlite3_column_text(stmt,1)},
+//                    {(const char*)sqlite3_column_text(stmt,2)},
+//                    {(const char*)sqlite3_column_text(stmt,3)},
+//                    {(const char*)sqlite3_column_text(stmt,4)},
+//
+//            };
+            values.emplace_back(sqlite3_column_int(stmt,0));
+            values.emplace_back((const char*)sqlite3_column_text(stmt,1));
+            values.emplace_back((const char*)sqlite3_column_text(stmt,2));
+            values.emplace_back((const char*)sqlite3_column_text(stmt,3));
+            values.emplace_back((const char*)sqlite3_column_text(stmt,4));
+            if(id < 0){
+                value_list.emplace_back(std::move(values));
+            }
+            else
+            {
+                value_list = std::move(values);
+            }
         }
     }
     else
@@ -89,7 +101,7 @@ bool select_comments(sqlite3* sql,jinja2::ValuesList& value_list)
 class index_router : public router
 {
 public:
-    index_router():router("/index",{GET,})
+    index_router():router("/",{GET,})
     {
 
     }
@@ -167,10 +179,44 @@ public:
     }
     bool method_post(http_conn* con) override
     {
-        return con->redirect("/index");
+        std::string username = con->req_body.form["username"];
+        std::string password = con->req_body.form["password"];
+        std::cout << username << std::endl;
+        std::cout << password << std::endl;
+        return con->redirect("/");
     }
 };
 ROUTER(login_router);
+
+class item_router : public router{
+public:
+    item_router() : router("/item",{GET})
+    {
+
+    }
+
+    bool method_get(http_conn* con) override
+    {
+        std::ifstream in("resource/templates/item.html");
+        std::stringstream buffer;
+        buffer << in.rdbuf();
+        in.close();
+
+        int id = atoi(con->req_header.parameters["id"].c_str());
+        std::cout << id << std::endl;
+        auto connect = connect_sqlite();
+        jinja2::ValuesList items;
+        select_items(connect,items,id);
+        close_sqlite(connect);
+        jinja2::Template temp;
+        temp.Load(buffer.str());
+        jinja2::ValuesMap params{
+                {"item",items}
+        };
+        return con->send_str(temp.RenderAsString(params).value());
+    }
+};
+ROUTER(item_router)
 
 class tmp_jpg_filter : public filter {
 public:
