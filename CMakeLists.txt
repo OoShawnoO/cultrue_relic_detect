@@ -1,32 +1,64 @@
 cmake_minimum_required(VERSION 3.25)
-project(culture_relic_detect CXX)
 
-set(jinja2cpp_DIR ~/CLionProjects/libs/jinja2cpp/lib/jinja2cpp)
-set(Torch_DIR ~/CLionProjects/libs/torch/)
-set(Torch_DIR ~/CLionProjects/libs/libtorch/share/cmake/Torch)
-set(OpenCV_DIR ~/CLionProjects/libs/opencv/lib/cmake/opencv4)
+set(TARGET culture_relic_detect)
+
+project(${TARGET} CXX)
+
+set(LIBS ~/CLionProjects/libs)
+set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH} ${LIBS}")
+
+set(jinja2cpp_DIR ${LIBS}/jinja2cpp/lib/jinja2cpp)
+set(Torch_DIR ${LIBS}/torch/)
+set(Torch_DIR ${LIBS}/libtorch/share/cmake/Torch)
+set(OpenCV_DIR ${LIBS}/opencv/lib/cmake/opencv4)
+
 
 find_package(Torch REQUIRED)
 find_package(OpenCV REQUIRED)
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS} ${OPENCV_CXX_FLAGS} -DNO_ERROR_LOG")
-
-include_directories(${TORCH_INCLUDE_DIRS})
-include_directories(${OPENCV_INCLUDE_DIRS})
-
 find_package(jinja2cpp REQUIRED)
 find_package(FMT REQUIRED)
 
-link_directories(~/CLionProjects/libs/sqlite3/lib)
-include_directories(~/CLionProjects/libs/sqlite3/include)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS} ${OPENCV_CXX_FLAGS} -DNO_ERROR_LOG")
+
+link_directories(${LIBS}/sqlite3/lib)
 include_directories(conv_event)
-include_directories(~/CLionProjects/libs/jinja2cpp/include)
-add_executable(culture_relic_detect main.cpp)
+include_directories(${TORCH_INCLUDE_DIRS})
+include_directories(${OPENCV_INCLUDE_DIRS})
+include_directories(${LIBS}/sqlite3/include)
+include_directories(${LIBS}/jinja2cpp/include)
+include_directories(${LIBS}/hiredis/include)
+link_directories(${LIBS}/hiredis/lib)
 
-target_link_libraries(culture_relic_detect jinja2cpp fmt::fmt sqlite3)
-target_link_libraries(culture_relic_detect "${TORCH_LIBRARIES}" "${OpenCV_LIBS}")
+add_executable(${TARGET} main.cpp routers/detect_router.h routers/index_router.h routers/item_router.h routers/login_router.h filters/templates_filters.h filters/tmp_router_filter.h)
 
-set_target_properties(culture_relic_detect PROPERTIES
+add_custom_target(
+        generate_header ALL
+        COMMAND python3 ${CMAKE_CURRENT_SOURCE_DIR}/routers/routers.py
+        COMMAND python3 ${CMAKE_CURRENT_SOURCE_DIR}/filters/filters.py
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)
+add_dependencies(${TARGET} generate_header)
+message([INFO]生成routers.h完毕)
+message([INFO]生成filters.h完毕)
+
+#find_path(HIREDIS_HEADER hiredis)
+#target_include_directories(${TARGET} PUBLIC ${HIREDIS_HEADER})
+#
+#find_library(HIREDIS_LIB hiredis)
+#target_link_libraries(${TARGET} ${HIREDIS_LIB})
+
+# <------------ add redis-plus-plus dependency -------------->
+# NOTE: this should be *sw* NOT *redis++*
+find_path(REDIS_PLUS_PLUS_HEADER sw)
+target_include_directories(${TARGET} PUBLIC ${REDIS_PLUS_PLUS_HEADER})
+
+find_library(REDIS_PLUS_PLUS_LIB redis++)
+target_link_libraries(${TARGET} ${REDIS_PLUS_PLUS_LIB})
+
+target_link_libraries(${TARGET} jinja2cpp fmt::fmt sqlite3)
+target_link_libraries(${TARGET} "${TORCH_LIBRARIES}" "${OpenCV_LIBS}")
+
+set_target_properties(${TARGET} PROPERTIES
         CXX_STANDARD 17
         CXX_STANDARD_REQUIRED ON
         )
