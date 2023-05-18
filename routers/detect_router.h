@@ -17,10 +17,7 @@ public:
     }
     bool method_post(http_conn* con) override
     {
-        std::ofstream out("resource/static/tmp/img.jpg");
-        out << con->req_body.files["file"].second;
-        out.close();
-        auto ret = _detector.predict("resource/static/tmp/img.jpg");
+        auto ret = _detector.predict_bytes(con->req_body.files["file"].second);
         json _predict{
                 {"url","static/tmp/img.jpg"},
                 {"result",ret.first},
