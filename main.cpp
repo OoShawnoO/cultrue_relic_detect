@@ -3,6 +3,6 @@
 
 int main()
 {
-    http_multi base;
+    conv_http_multi base;
     base.wait();
 }

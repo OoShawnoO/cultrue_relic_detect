@@ -19,7 +19,6 @@ public:
     {
         auto ret = _detector.predict_bytes(con->req_body.files["file"].second);
         json _predict{
-                {"url","static/tmp/img.jpg"},
                 {"result",ret.first},
         };
         return con->send_str(_predict.dump(),"application/json");

@@ -249,12 +249,28 @@
                     processData: false,
                     async:true,
                     success: function(response) {
-                        $('#detect_img').attr('src',response.url)
                         $('#result').text(response.result);
                     }
                   });
                 });
               });
+              var fileInput = document.getElementById("file");
+              var detect_img = document.getElementById("detect_img");
+              fileInput.addEventListener('change',function(){
+                if(!fileInput.value) { return; }
+                var file = fileInput.files[0];
+                if(file.type !== 'image/jpeg' && file.type !== 'image/png' && file.type !== 'image/gif')
+                {
+                  return;
+                }
+                var reader = new FileReader();
+                reader.onload = function(e)
+                {
+                  var data = e.target.result;
+                  detect_img.setAttribute("src",data)
+                };
+                reader.readAsDataURL(file);
+              })
           </script>
       </div>
     </div>
