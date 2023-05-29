@@ -33,6 +33,5 @@ public:
         return con->send_str(temp.RenderAsString(params).value());
     }
 };
-ROUTER(item_router)
 
 #endif

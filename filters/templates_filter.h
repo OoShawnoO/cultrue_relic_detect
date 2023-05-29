@@ -1,5 +1,5 @@
-#ifndef CULTURE_RELIC_DETECT_TEMPLATES_FILTERS_H
-#define CULTURE_RELIC_DETECT_TEMPLATES_FILTERS_H
+#ifndef CULTURE_RELIC_DETECT_TEMPLATES_FILTER_H
+#define CULTURE_RELIC_DETECT_TEMPLATES_FILTER_H
 
 #include "http/http_conn.h"
 
@@ -9,6 +9,5 @@ public:
     {
     }
 };
-FILTER(templates_filter)
 
 #endif

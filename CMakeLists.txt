@@ -29,7 +29,7 @@ include_directories(${LIBS}/jinja2cpp/include)
 include_directories(${LIBS}/hiredis/include)
 link_directories(${LIBS}/hiredis/lib)
 
-add_executable(${TARGET} main.cpp routers/detect_router.h routers/index_router.h routers/item_router.h routers/login_router.h filters/templates_filters.h filters/tmp_router_filter.h)
+add_executable(${TARGET} main.cpp routers/detect_router.h routers/index_router.h routers/item_router.h routers/login_router.h filters/templates_filter.h filters/tmp_router_filter.h)
 
 add_custom_target(
         generate_header ALL
@@ -41,20 +41,12 @@ add_dependencies(${TARGET} generate_header)
 message([INFO]生成routers.h完毕)
 message([INFO]生成filters.h完毕)
 
-#find_path(HIREDIS_HEADER hiredis)
-#target_include_directories(${TARGET} PUBLIC ${HIREDIS_HEADER})
-#
-#find_library(HIREDIS_LIB hiredis)
-#target_link_libraries(${TARGET} ${HIREDIS_LIB})
 
-# <------------ add redis-plus-plus dependency -------------->
-# NOTE: this should be *sw* NOT *redis++*
 find_path(REDIS_PLUS_PLUS_HEADER sw)
 target_include_directories(${TARGET} PUBLIC ${REDIS_PLUS_PLUS_HEADER})
 
 find_library(REDIS_PLUS_PLUS_LIB redis++)
 target_link_libraries(${TARGET} ${REDIS_PLUS_PLUS_LIB})
-
 target_link_libraries(${TARGET} jinja2cpp fmt::fmt sqlite3)
 target_link_libraries(${TARGET} "${TORCH_LIBRARIES}" "${OpenCV_LIBS}")
 

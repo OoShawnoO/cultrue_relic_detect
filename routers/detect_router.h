@@ -25,6 +25,5 @@ public:
     }
 };
 detector detect_router::_detector("../model/culture_relic");
-ROUTER(detect_router)
 
 #endif

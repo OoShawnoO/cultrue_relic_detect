@@ -47,6 +47,5 @@ public:
         return con->send_str(temp.RenderAsString(params).value());
     }
 };
-ROUTER(index_router)
 
 #endif

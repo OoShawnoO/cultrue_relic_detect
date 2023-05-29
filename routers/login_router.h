@@ -24,6 +24,5 @@ public:
         return con->redirect("/");
     }
 };
-ROUTER(login_router);
 
 #endif

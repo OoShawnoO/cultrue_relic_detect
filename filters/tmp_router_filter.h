@@ -3,9 +3,9 @@
 
 #include "http/http_conn.h"
 
-class tmp_jpg_filter : public filter {
+class tmp_router_filter : public filter {
 public:
-    tmp_jpg_filter() : filter("/static/tmp/*",{GET})
+    tmp_router_filter() : filter("/static/tmp/*", {GET})
     {
 
     }
@@ -16,6 +16,5 @@ public:
         return true;
     }
 };
-FILTER(tmp_jpg_filter)
 
 #endif
