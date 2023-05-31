@@ -198,6 +198,9 @@ MKLDNN_DIR:PATH=MKLDNN_DIR-NOTFOUND
 //The directory containing a CMake configuration file for MKL.
 MKL_DIR:PATH=MKL_DIR-NOTFOUND
 
+//The directory containing a CMake configuration file for OpenCV.
+OpenCV_DIR:PATH=/usr/local/lib/cmake/opencv4
+
 //Path to a file.
 REDIS_PLUS_PLUS_HEADER:PATH=/usr/local/include
 
@@ -206,6 +209,9 @@ REDIS_PLUS_PLUS_LIB:FILEPATH=/usr/local/lib/libredis++.so
 
 //Path to a library.
 TORCH_LIBRARY:FILEPATH=/usr/local/lib/libtorch.so
+
+//The directory containing a CMake configuration file for Torch.
+Torch_DIR:PATH=/usr/local/share/cmake/Torch
 
 //Path to a library.
 c10_LIBRARY:FILEPATH=/usr/local/lib/libc10.so
@@ -218,6 +224,9 @@ culture_relic_detect_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 culture_relic_detect_SOURCE_DIR:STATIC=/home/huzhida/CLionProjects/cultrue_relic_detect
+
+//The directory containing a CMake configuration file for jinja2cpp.
+jinja2cpp_DIR:PATH=/usr/local/lib/jinja2cpp
 
 //Path to a library.
 kineto_LIBRARY:FILEPATH=/usr/local/lib/libkineto.a
@@ -353,7 +362,7 @@ CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 //Details about finding OpenCV
 FIND_PACKAGE_MESSAGE_DETAILS_OpenCV:INTERNAL=[/home/huzhida/CLionProjects/libs/opencv][v4.5.5()]
 //Details about finding Torch
-FIND_PACKAGE_MESSAGE_DETAILS_Torch:INTERNAL=[/usr/local/lib/libtorch.so][/home/huzhida/CLionProjects/libs/libtorch/include;/home/huzhida/CLionProjects/libs/libtorch/include/torch/csrc/api/include][v()]
+FIND_PACKAGE_MESSAGE_DETAILS_Torch:INTERNAL=[/usr/local/lib/libtorch.so][/usr/local/include;/usr/local/include/torch/csrc/api/include][v()]
 //linker supports push/pop state
 _CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED:INTERNAL=TRUE
 
