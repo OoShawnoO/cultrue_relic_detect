@@ -1,11 +1,13 @@
 # ninja log v5
-22701	23695	1685529005383155936	culture_relic_detect	f954f37a75a696a
-1	57	1685529079189909408	build.ninja	a1653f7e41ba7e1b
-18	45	0	CMakeFiles/generate_header	8e923429c20335e1
-49	22700	1685529004375063693	CMakeFiles/culture_relic_detect.dir/main.cpp.o	1d0060db49d89828
-18	45	0	/home/huzhida/CLionProjects/cultrue_relic_detect/cmake-build-debug/CMakeFiles/generate_header	8e923429c20335e1
-0	45	1685529079189909408	build.ninja	a1653f7e41ba7e1b
-19	48	0	CMakeFiles/generate_header	8e923429c20335e1
-19	48	0	/home/huzhida/CLionProjects/cultrue_relic_detect/cmake-build-debug/CMakeFiles/generate_header	8e923429c20335e1
-48	22514	1685529101707969852	CMakeFiles/culture_relic_detect.dir/main.cpp.o	1d0060db49d89828
-22514	23463	1685529102668057702	/home/huzhida/CLionProjects/cultrue_relic_detect/culture_relic_detect	5f99a60f1a21b63
+0	30	0	CMakeFiles/generate_header	8e923429c20335e1
+0	30	0	/home/huzhida/CLionProjects/cultrue_relic_detect/cmake-build-debug/CMakeFiles/generate_header	8e923429c20335e1
+30	30523	1685588894597094853	CMakeFiles/culture_relic_detect.dir/main.cpp.o	1d0060db49d89828
+30523	31482	1685588895564952672	/home/huzhida/CLionProjects/cultrue_relic_detect/culture_relic_detect	5f99a60f1a21b63
+20	53	0	CMakeFiles/generate_header	8e923429c20335e1
+20	53	0	/home/huzhida/CLionProjects/cultrue_relic_detect/cmake-build-debug/CMakeFiles/generate_header	8e923429c20335e1
+25	54	0	CMakeFiles/generate_header	8e923429c20335e1
+25	54	0	/home/huzhida/CLionProjects/cultrue_relic_detect/cmake-build-debug/CMakeFiles/generate_header	8e923429c20335e1
+54	21829	1685589033473332691	CMakeFiles/culture_relic_detect.dir/main.cpp.o	1d0060db49d89828
+21829	22628	1685589034281311697	/home/huzhida/CLionProjects/cultrue_relic_detect/culture_relic_detect	5f99a60f1a21b63
+21	63	0	CMakeFiles/generate_header	8e923429c20335e1
+21	63	0	/home/huzhida/CLionProjects/cultrue_relic_detect/cmake-build-debug/CMakeFiles/generate_header	8e923429c20335e1
