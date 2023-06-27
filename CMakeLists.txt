@@ -34,7 +34,7 @@ message([INFO]生成filters.h完毕)
 #find_library(REDIS_PLUS_PLUS_LIB redis++)
 #target_link_libraries(${TARGET} ${REDIS_PLUS_PLUS_LIB})
 
-target_link_libraries(${TARGET} jinja2cpp fmt::fmt sqlite3)
+target_link_libraries(${TARGET} -lpthread jinja2cpp fmt::fmt sqlite3)
 target_link_libraries(${TARGET} "${TORCH_LIBRARIES}" "${OpenCV_LIBS}")
 
 set_target_properties(${TARGET} PROPERTIES
