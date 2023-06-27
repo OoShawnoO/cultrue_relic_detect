@@ -1,4 +1,0 @@
-/home/huzhida/CLionProjects/cultrue_relic_detect/cmake-build-debug/CMakeFiles/culture_relic_detect.dir
-/home/huzhida/CLionProjects/cultrue_relic_detect/cmake-build-debug/CMakeFiles/generate_header.dir
-/home/huzhida/CLionProjects/cultrue_relic_detect/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/huzhida/CLionProjects/cultrue_relic_detect/cmake-build-debug/CMakeFiles/rebuild_cache.dir
